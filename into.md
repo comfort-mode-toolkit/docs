@@ -1,0 +1,12 @@
+# Welcome to the Comfort Mode Toolkit Documentation
+
+The Comfort Mode Toolkit is a collaborative, open-source project focused on making the web more comfortable and accessible for everyone.  
+We believe comfort is not just a luxury—it's a fundamental part of digital inclusion and wellbeing.
+
+Whether you're a designer, developer, researcher, or someone passionate about accessibility and comfort, you'll find something here to help you learn, contribute, and make a difference.
+
+**Note:** This project is a work in progress!  
+We’re always adding new findings and encourage you to contribute your insights, questions, and feedback.
+
+Ready to explore and help shape a comfier web?  
+Dive in and join the Comfort Mode Toolkit community! 🛋️💛
