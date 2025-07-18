@@ -1,0 +1,91 @@
+Comfort Commons Archive
+=======================
+
+🌐 Comfort Commons Buildathon  
+An open research sprint exploring humane, care-centered design for the web.
+
+Comfort Commons is a student-led buildathon and living archive-in-progress —  
+a shared canvas where we gather to document, question, and co-create  
+what a more caring, perceptually comfortable web could look like.
+
+🔍 Exploring the Paradox of Perceptual Comfort
+---------------------------------------------
+
+We begin with a layered, deceptively simple question:  
+**Can we build a web that puts users — beyond just standards — in control of their own comfort and needs?**
+
+We recognize that comfort and accessibility needs are deeply diverse and contextual —  
+yet they also intersect in powerful, often surprising ways.
+
+In this buildathon, we aim to collaboratively map and model these overlaps  
+into open, adaptable design patterns that reduce sensory and cognitive friction for users —  
+while remaining lightweight and realistic for developers to adopt.
+
+Here, perceptual comfort isn't a fixed metric, but an evolving dialogue  
+between users, systems, and design that cares.
+
+This isn't just a buildathon. It's a question in motion.  
+It's open-source, non-commercial, and free forever.  
+It belongs to all of us — and we hope you'll help shape it.
+
+.. note::
+
+   ⚙️ Archive sections are **coming soon** as the buildathon progresses.  
+   In the meantime, do take a peek behind the scenes at our prep space:  
+   👉 `PreComfortCommons <https://your-precomfort-link>`_
+
+----
+
+Explore the Archive
+-------------------
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Archive Index
+
+   getting-started
+   comfort-mode-patterns
+   design-patterns
+   code-recipes
+   modeling-notes
+   contributor-reflections
+   join-us
+
+----
+
+About the Project
+-----------------
+
+Comfort Commons is proudly **cross-major** and **student-led**, with contributors  
+from 10+ universities around the world — including students from design, tech, cognitive science, policy, literature, and beyond.
+
+The archive is organized into tracks:
+
+- **Design Patterns** – UI/UX systems for perceptual comfort  
+- **Tech for Comfort** – Code-based customization tools  
+- **Conceptual Models** – Systems thinking and framing tools  
+- **Reflections** – Narratives and real-world experiences  
+
+This work is built on shared values: openness, non-commercialization, and accessibility by design.
+
+----
+
+Join the Commons
+----------------
+
+Whether you're a coder, designer, researcher, or thinker —  
+there's a space for your voice here.
+
+See :doc:`join-us` for how to contribute, collaborate, or remix this work.
+
+----
+
+Reminder on Use
+---------------
+
+All materials here are shared under an open license.  
+No part of this archive or any tool derived from it may be commercialized.
+
+We ask that all use reflects the spirit of the Commons:  
+build with care, attribute with integrity.
+

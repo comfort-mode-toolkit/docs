@@ -1,17 +1,18 @@
-Welcome to Comfort Mode Toolkit's documentation!
-================================================
-A collaborative, open-source toolkit and research project for making the web more comfortable and accessible for everyone.
+Welcome to the Comfort Mode Toolkit's Documentation!
+====================================================
+
+A collaborative, open-source research and implementation toolkit for making the web more perceptually comfortable and inclusive.
+
+
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Main Contents:
 
-   intro
+   cm_colors
 
+----
 
-
-Indices and tables
-==================
 
 * :ref:`genindex`
 * :ref:`modindex`

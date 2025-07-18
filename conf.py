@@ -12,8 +12,12 @@ author = 'Lalitha A R'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'cm-colors')))
 
-extensions = ['myst_parser',]
+extensions = ['sphinx.ext.autodoc',    'sphinx.ext.napoleon', # Recommended if you use Google or NumPy style docstrings
+    'sphinx.ext.viewcode',]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
