@@ -1,2 +1,5 @@
 sphinx
 myst-parser
+cm-colors
+sphinx
+sphinx-autodoc-typehints

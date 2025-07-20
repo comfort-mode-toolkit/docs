@@ -12,9 +12,9 @@ author = 'Lalitha A R'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
-import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'cm-colors')))
+# import os
+# import sys
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'cm-colors')))
 
 extensions = ['sphinx.ext.autodoc',    'sphinx.ext.napoleon', # Recommended if you use Google or NumPy style docstrings
     'sphinx.ext.viewcode',]
@@ -28,5 +28,9 @@ source_suffix = {
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
+python:
+  install:
+    - requirements: requirements.txt
+    
 html_theme = 'alabaster'
 html_static_path = ['_static']
