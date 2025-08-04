@@ -30,6 +30,7 @@ html_css_files = [
     'custom.css',
 ]
 
+html_theme = 'alabaster'
 html_theme_options = {
     'sidebar_bg': '#ECEAF3',
     'body_text': '#1A1A1A',

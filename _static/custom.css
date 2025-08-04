@@ -76,3 +76,16 @@ strong, b {
     color: #232259 !important;
   } */
 }
+
+    .wy-side-scroll { /* This targets the scrollable content within the sidebar */
+        position: -webkit-sticky; /* For Safari compatibility */
+        position: sticky;
+        top: 0; /* Adjust this value to control how far from the top it sticks */
+        height: 100vh; /* Make it fill the viewport height */
+        overflow-y: auto; /* Enable scrolling within the sidebar if content overflows */
+    }
+
+    /* You might also need to adjust the main content area to prevent overlap */
+    .wy-nav-content-wrap {
+        margin-left: 250px; /* Adjust this to match your sidebar width */
+    }

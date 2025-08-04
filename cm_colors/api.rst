@@ -1,5 +1,5 @@
-CM-Colors API Reference
-=======================
+API Reference
+===============
 
 *Everything you can do with CM-Colors (the non-scary version)*
 
@@ -12,7 +12,7 @@ you probably only need the first one, but the rest are here if you get curious!
     :show-inheritance:
     :special-members: __init__
 
-    The main CM-Colors class. Create one of these, then use it to fix your colors!
+    The main CM-Colors class. Create one of these, then use it to tune your colors!
 
 The One You Actually Need
 -------------------------
@@ -27,7 +27,7 @@ The One You Actually Need
     
     **What you get back:** 
     
-    * **Simple mode** (default): Just the fixed color and whether it's accessible
+    * **Simple mode** (default): Just the tuned color and whether it's accessible
     * **Details mode** (``details=True``): Full report with improvement stats and messages
     
     **Examples:**
@@ -35,18 +35,18 @@ The One You Actually Need
     .. code-block:: python
     
         # Simple - just get the fixed color
-        text = (100, 100, 100)  # Gray text
-        background = (255, 255, 255)  # White background
-        
-        fixed_text, is_accessible = cm.tune_colors(text, background)
-        print(f"Fixed color: {fixed_text}")
-        print(f"Is accessible: {is_accessible}")
+        text = "rgb(100, 100, 100)"  # Gray text
+        background = "rgb(255, 255, 255)"  # White background
+
+        tuned_text, is_accessible = cm.tune_colors(text, background)
+        print(f"Tuned color: {tuned_text}") #"rgb(98, 98, 98)"
+        print(f"Is accessible: {is_accessible}") #True
         
     .. code-block:: python
     
         # Detailed - get the full report
         result = cm.tune_colors(text, background, details=True)
-        print(f"Fixed color: {result['tuned_text']}")
+        print(f"Tuned color: {result['tuned_text']}")
         print(f"WCAG level: {result['wcag_level']}")
         print(f"Message: {result['message']}")
         print(f"Improvement: {result['improvement_percentage']:.1f}%")
@@ -54,12 +54,12 @@ The One You Actually Need
     .. code-block:: python
     
         # Large text has different requirements
-        large_fixed, accessible = cm.tune_colors(text, background, large_text=True)
+        large_tuned_text, large_accessible = cm.tune_colors(text, background, large_text=True)
 
 Color Checking Functions
 ------------------------
 
-*For when you want to test your colors before fixing them*
+*For when you want to test your colors before tuning them*
 
 .. automethod:: cm_colors.CMColors.contrast_ratio
 
@@ -67,7 +67,7 @@ Color Checking Functions
     
     **The magic numbers:**
     
-    * Under 4.5 = Hard to read (needs fixing)
+    * Under 4.5 = Hard to read (needs tuning)
     * 4.5-7.0 = Pretty readable (AA level)  
     * Over 7.0 = Super readable (AAA level)
     
@@ -149,7 +149,7 @@ Color Format Functions
         print(f"RGB: {rgb}")  # (123, 45, 200)
         
         # You can also pass different formats directly to tune_colors
-        fixed, accessible = cm.tune_colors("#7B2DC8", "#FFFFFF")
+        tuned_text, accessible = cm.tune_colors("#7B2DC8", "#FFFFFF")
 
 Color Conversion Functions
 --------------------------
@@ -213,8 +213,8 @@ Quick Reference Card
 .. code-block:: python
 
     # Simple way
-    fixed_color, is_accessible = cm.tune_colors(your_text, your_background)
-    
+    tuned_text, is_accessible = cm.tune_colors(your_text, your_background)
+
     # With details
     result = cm.tune_colors(your_text, your_background, details=True)
 
@@ -224,15 +224,15 @@ Quick Reference Card
 
     level = cm.wcag_level(your_text, your_background)
     if level == "FAIL":
-        fixed, _ = cm.tune_colors(your_text, your_background)
+        tuned_text, _ = cm.tune_colors(your_text, your_background)
 
 **Want to see how much changed?**
 
 .. code-block:: python
 
     original = (100, 100, 100)
-    fixed, _ = cm.tune_colors(original, background)
-    difference = cm.delta_e(original, fixed)
+    t, _ = cm.tune_colors(original, background)
+    difference = cm.delta_e(original, tuned_text)
     # Under 2.3 = barely noticeable
 
 **Working with different color formats?**
@@ -243,14 +243,14 @@ Quick Reference Card
     rgb = cm.parse_to_rgb("#FF8040")
     
     # Or use directly
-    fixed, _ = cm.tune_colors("#FF8040", "#FFFFFF")
+    tuned_text, _ = cm.tune_colors("#FF8040", "#FFFFFF")
 
 **Large text (18pt+ or 14pt+ bold)?**
 
 .. code-block:: python
 
     # Large text has relaxed contrast requirements
-    fixed, accessible = cm.tune_colors(text, bg, large_text=True)
+    tuned_text, accessible = cm.tune_colors(text, bg, large_text=True)
     level = cm.wcag_level(text, bg, large_text=True)
 
 Function Return Values Quick Guide
@@ -260,8 +260,8 @@ Function Return Values Quick Guide
 
 * **details=False (default):** ``(tuned_color_string, is_accessible_boolean)``
 * **details=True:** Dictionary with keys:
-  
-  * ``'tuned_text'`` - The fixed color
+
+  * ``'tuned_text'`` - The tuned color
   * ``'status'`` - True if accessible, False if failed
   * ``'wcag_level'`` - "AA", "AAA", or "FAIL"
   * ``'improvement_percentage'`` - How much contrast improved

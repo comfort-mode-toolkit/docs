@@ -1,4 +1,4 @@
-# CM-Colors: Technical Deep Dive 🤓
+# Technical Deep Dive
 
 *For the color nerds, math geeks, and optimization enthusiasts who want to know HOW the magic actually works*
 
