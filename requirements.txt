@@ -1,5 +1,5 @@
 sphinx
 myst-parser
-cm-colors
 sphinx-autodoc-typehints
 git+https://github.com/comfort-mode-toolkit/cm-colors.git
+cm-colors

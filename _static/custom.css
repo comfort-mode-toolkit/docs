@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Yeseva+One&family=Inter:wght@400;600;700&display=swap');
+
+/* Body and background */
+body, .body {
+  background: #F7F5FA !important;
+  color: #1A1A1A !important;
+  font-family: 'Atkinson Hyperlegible', Arial, sans-serif;
+}
+
+/* Top-level headers: Yeseva One */
+h1, h2, .headline {
+  font-family: 'Yeseva One', cursive, serif !important;
+  color: #232259 !important;
+  font-weight: 400 !important;
+}
+
+/* Lower-level headers: Inter with different weights */
+h3 {
+  font-family: 'Inter', 'Atkinson Hyperlegible', Arial, sans-serif !important;
+  font-weight: 700 !important;
+  color: #232259 !important;
+}
+h4 {
+  font-family: 'Inter', 'Atkinson Hyperlegible', Arial, sans-serif !important;
+  font-weight: 600 !important;
+  color: #232259 !important;
+}
+h5, h6 {
+  font-family: 'Inter', 'Atkinson Hyperlegible', Arial, sans-serif !important;
+  font-weight: 400 !important;
+  color: #232259 !important;
+}
+
+/* Sidebar */
+.sidebar, .sphinxsidebar {
+  background: #ECEAF3 !important;
+  color: #1A1A1A !important;
+}
+
+/* Main accent/link color */
+a, .reference, .sidebar-link {
+  color: #14407C !important;
+  text-decoration: underline;
+}
+
+/* Accent for highlights or buttons (AAA on light bg) */
+.button, .highlight, .rst-content .note {
+  background: #FFF7E6 !important;
+  color: #E57C46 !important;
+  border: 1px solid #D3D0DD !important;
+}
+
+/* Inline code and preformatted */
+code, pre {
+  background: #ECEAF3 !important;
+  color: #232259 !important;
+  border: 1px solid #D3D0DD !important;
+}
+
+/* Horizontal rules */
+hr, .docutils hr {
+  border-color: #D3D0DD !important;
+}
+
+/* Strong text */
+strong, b {
+  color: #232259 !important;
+}
+
+/* @media screen and (max-width: 875px) {
+  html body div.sphinxsidebar h3,
+  html body div.sphinxsidebar h4,
+  html body div.sphinxsidebar p,
+  html body div.sphinxsidebar h3 a,
+  .caption .caption-text{
+    color: #232259 !important;
+  } */
+}

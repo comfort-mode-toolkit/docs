@@ -10,3 +10,4 @@ covering its core functionalities, helper utilities, and advanced optimization a
    
    cm_colors/installation
    cm_colors/api
+   cm_colors/technical

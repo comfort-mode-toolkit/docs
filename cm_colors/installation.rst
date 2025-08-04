@@ -28,12 +28,23 @@ The One Function You Actually Need
     background = (255, 255, 255)  # White background
 
     # ✨ The magic happens here ✨
-    fixed_text, _, level, old_contrast, new_contrast = cm.ensure_accessible_colors(text_color, background)
+    fixed_text, is_accessible = cm.tune_colors(text_color, background)
 
     print(f"Your original text color: {text_color}")
     print(f"New readable text color: {fixed_text}")
-    print(f"Readability level achieved: {level}")
-    print(f"Contrast improved from {old_contrast:.1f} to {new_contrast:.1f}")
+    print(f"Is it accessible now? {is_accessible}")
+
+**Want more details?**
+
+.. code-block:: python
+
+    # Get the full report
+    result = cm.tune_colors(text_color, background, details=True)
+    
+    print(f"Fixed color: {result['tuned_text']}")
+    print(f"WCAG level: {result['wcag_level']}")
+    print(f"Status: {result['message']}")
+    print(f"Improvement: {result['improvement_percentage']:.1f}%")
 
 **What just happened?**
 
@@ -76,11 +87,11 @@ Other Handy Functions
     background = (255, 255, 255)
 
     # Get a simple pass/fail
-    level = cm.get_wcag_level(text, background)
+    level = cm.wcag_level(text, background)
     print(f"Your colors are: {level}")  # "AA", "AAA", or "FAIL"
 
     # Get the actual contrast number (higher = more readable)
-    contrast = cm.calculate_contrast(text, background)
+    contrast = cm.contrast_ratio(text, background)
     print(f"Contrast score: {contrast:.1f}")
     # 4.5+ = Good, 7+ = Excellent, under 4.5 = Needs fixing
 
@@ -96,8 +107,40 @@ Other Handy Functions
 
     # This measures how different colors look to human eyes
     # Under 2.0 = You probably can't tell the difference
-    difference = cm.calculate_delta_e_2000(original, adjusted)
+    difference = cm.delta_e(original, adjusted)
     print(f"Visual difference: {difference:.1f}")
+
+"Working with Different Color Formats"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+*Because not everyone uses RGB tuples*
+
+.. code-block:: python
+
+    # Parse different color formats
+    hex_color = "#7B2DC8"  # Purple in hex
+    rgb_tuple = cm.parse_to_rgb(hex_color)
+    print(f"Hex {hex_color} as RGB: {rgb_tuple}")
+
+    # You can also pass hex or rgb strings directly to tune_colors
+    fixed, accessible = cm.tune_colors("#7B2DC8", "#FFFFFF")
+    print(f"Fixed hex color: {fixed}")
+
+"Large Text Gets Special Treatment"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+*18pt+ text or 14pt+ bold text has relaxed requirements*
+
+.. code-block:: python
+
+    # Normal text needs higher contrast
+    normal_fixed, _ = cm.tune_colors((150, 150, 150), (255, 255, 255))
+    
+    # Large text can get away with less contrast
+    large_fixed, _ = cm.tune_colors((150, 150, 150), (255, 255, 255), large_text=True)
+    
+    print(f"Normal text needs: {normal_fixed}")
+    print(f"Large text needs: {large_fixed}")
 
 Color Science Stuff
 ^^^^^^^^^^^^^^^^^^^
@@ -129,29 +172,35 @@ Real-World Examples
 
 .. code-block:: python
 
-    def fix_my_website_colors(text_rgb, bg_rgb):
+    def fix_my_website_colors(text_color, bg_color):
         """
         Takes your website colors and makes them readable.
         Returns CSS-ready colors.
         """
         cm = CMColors()
         
-        fixed_text, fixed_bg, level, _, _ = cm.ensure_accessible_colors(text_rgb, bg_rgb)
+        # Get detailed info about the fix
+        result = cm.tune_colors(text_color, bg_color, details=True)
         
-        # Convert to CSS format
-        css_text = f"rgb({fixed_text[0]}, {fixed_text[1]}, {fixed_text[2]})"
-        css_bg = f"rgb({fixed_bg[0]}, {fixed_bg[1]}, {fixed_bg[2]})"
+        # Convert to CSS format if needed
+        fixed_text = result['tuned_text']
+        if isinstance(fixed_text, tuple):
+            css_text = f"rgb({fixed_text[0]}, {fixed_text[1]}, {fixed_text[2]})"
+        else:
+            css_text = fixed_text  # Already a string
         
         return {
-            'text': css_text,
-            'background': css_bg,
-            'passes': level,
-            'ready_for_css': True
+            'text_color': css_text,
+            'background_color': bg_color,
+            'wcag_level': result['wcag_level'],
+            'is_accessible': result['status'],
+            'improvement': f"{result['improvement_percentage']:.1f}%"
         }
 
     # Use it
     colors = fix_my_website_colors((120, 80, 200), (255, 255, 255))
-    print(f"CSS: color: {colors['text']}; background: {colors['background']};")
+    print(f"CSS: color: {colors['text_color']};")
+    print(f"Accessibility: {colors['wcag_level']} ({colors['improvement']} better)")
 
 "I Need to Check a Bunch of Colors"
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -171,11 +220,32 @@ Real-World Examples
     print("-" * 40)
 
     for name, color in brand_colors:
-        level = cm.get_wcag_level(color, white_bg)
-        contrast = cm.calculate_contrast(color, white_bg)
+        level = cm.wcag_level(color, white_bg)
+        contrast = cm.contrast_ratio(color, white_bg)
         
         status = "✅ Good" if level in ["AA", "AAA"] else "❌ Needs fixing"
         print(f"{name}: {status} (Level: {level}, Contrast: {contrast:.1f})")
+        
+        if level == "FAIL":
+            fixed, _ = cm.tune_colors(color, white_bg)
+            print(f"  → Suggested fix: {fixed}")
+
+"Batch Processing Colors"
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    # Process multiple color pairs at once
+    color_pairs = [
+        ((120, 80, 200), (255, 255, 255)),  # Purple on white
+        ((100, 100, 100), (240, 240, 240)), # Gray on light gray
+        ((200, 50, 50), (255, 255, 255))    # Red on white
+    ]
+
+    print("Batch processing results:")
+    for i, (text, bg) in enumerate(color_pairs, 1):
+        fixed, accessible = cm.tune_colors(text, bg)
+        print(f"Pair {i}: {text} → {fixed} (accessible: {accessible})")
 
 Why This Matters
 ----------------
@@ -203,6 +273,10 @@ A: We'll try our best! But if you chose neon yellow on white... pick better star
 **Q: Do I need to understand color science?**
 
 A: Not at all! That's exactly why this library exists.
+
+**Q: What's the difference between details=True and details=False?**
+
+A: `details=False` (default) gives you just the fixed color and a yes/no on accessibility. `details=True` gives you the full report with WCAG levels, improvement percentages, and helpful messages.
 
 ----
 
