@@ -6,6 +6,10 @@ API Reference
 This is your complete guide to all the functions in CM-Colors. Don't worry - 
 you probably only need the first one, but the rest are here if you get curious!
 
+.. note::
+
+    **New in v0.3.0**: The :doc:`colorpair` and :doc:`color` classes provide a more intuitive API for working with colors. This CMColors class remains fully supported for backward compatibility.
+
 .. autoclass:: cm_colors.CMColors
     :members: __init__
     :undoc-members:
