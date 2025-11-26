@@ -58,6 +58,41 @@ Specifies the default background color for rules that do not explicitly define a
 
 This is useful when your CSS relies on a body-level background color that is not repeated in every rule.
 
+Features
+--------
+
+CSS Variable Support
+~~~~~~~~~~~~~~~~~~~~
+
+The CLI supports tuning colors defined as CSS variables (custom properties).
+
+*   **Scope**: Variables must be defined in ``:root`` or ``html`` blocks within the same file.
+*   **Behavior**: When a variable is used in a color pair that requires tuning, the CLI updates the **variable definition** itself. This ensures that all other usages of that variable also benefit from the improved contrast.
+
+**Example Input**:
+
+.. code-block:: css
+
+    :root {
+        --text-primary: #ccc; /* Too light */
+    }
+    body {
+        color: var(--text-primary);
+        background: white;
+    }
+
+**Example Output** (``_cm.css``):
+
+.. code-block:: css
+
+    :root {
+        --text-primary: #767676; /* Tuned */
+    }
+    body {
+        color: var(--text-primary);
+        background: white;
+    }
+
 Understanding the Output
 ------------------------
 
@@ -87,9 +122,6 @@ For pairs that could not be tuned, the CLI provides detailed information:
       style.css -> .header
         #cccccc on #ffffff (Contrast: 1.61)
         Reason: Could not tune without too much changes
-      style.css -> .button
-        #3498db on #ffffff (Contrast: 3.15)
-        Reason: Could not tune without too much changes
 
 Each failure shows:
 
@@ -116,13 +148,6 @@ HTML Report
 
 When colors are successfully tuned, an HTML report is generated at ``cm_colors_report.html``. This report provides a visual comparison of the before and after states for each tuned color pair.
 
-The report includes:
-
-- The CSS selector and file name
-- Visual color swatches showing the original and tuned colors
-- Sample text demonstrating the readability difference
-- WCAG level badges (FAIL to AA, FAIL to AAA, etc.)
-
 Practical Examples
 ------------------
 
@@ -143,7 +168,7 @@ Example 1: Single File Processing
     2 pairs tuned
 
     Report generated: /path/to/cm_colors_report.html
-    Have a chocolate 🍫
+    Have a chocolate
 
 Example 2: Directory Processing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -168,101 +193,7 @@ Example 2: Directory Processing
         Reason: Could not tune without too much changes
 
     Report generated: /path/to/cm_colors_report.html
-    Have a chocolate 🍫
-
-Example 3: Custom Background Color
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If your site uses a light gray background:
-
-.. code-block:: bash
-
-    cm-colors style.css --default-bg "#f5f5f5"
-
-This ensures accurate contrast calculations for rules that do not specify a background color.
-
-Common Scenarios
-----------------
-
-Scenario 1: All Colors Are Accessible
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If your colors already meet accessibility standards:
-
-.. code-block:: text
-
-    Processing 1 files...
-
-    5 pairs already accessible (Great job on these)
-
-    No changes needed. ✨
-
-No ``_cm`` files or HTML report are generated since no changes were made.
-
-Scenario 2: Some Colors Cannot Be Tuned
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When starting colors are too far from accessible:
-
-.. code-block:: text
-
-    Could not tune 1 pairs:
-      style.css -> .accent
-        #e0e0e0 on #ffffff (Contrast: 1.18)
-        Reason: Could not tune without too much changes
-
-**Solution**: Choose a darker starting color for the text or a different background color. The library preserves visual similarity, so extremely low-contrast pairs cannot be fixed without significant color changes.
-
-Scenario 3: Nested CSS Rules
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The CLI correctly handles nested rules such as media queries:
-
-.. code-block:: css
-
-    @media (min-width: 768px) {
-        .responsive-text {
-            color: #777777;
-            background-color: white;
-        }
-    }
-
-Colors within ``@media`` and ``@supports`` rules are processed and tuned as needed.
-
-Workflow Integration
---------------------
-
-Pre-Commit Hook
-~~~~~~~~~~~~~~~
-
-Add CM-Colors to your pre-commit workflow:
-
-.. code-block:: yaml
-
-    # .pre-commit-config.yaml
-    repos:
-      - repo: local
-        hooks:
-          - id: cm-colors
-            name: Check CSS color contrast
-            entry: cm-colors
-            language: system
-            files: \.css$
-            pass_filenames: true
-
-Continuous Integration
-~~~~~~~~~~~~~~~~~~~~~~
-
-Run CM-Colors in your CI pipeline:
-
-.. code-block:: bash
-
-    # In your CI script
-    cm-colors ./css/
-    if [ $? -ne 0 ]; then
-        echo "Color contrast check failed"
-        exit 1
-    fi
+    Have a chocolate
 
 Troubleshooting
 ---------------

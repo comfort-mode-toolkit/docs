@@ -1,5 +1,7 @@
 sphinx
 myst-parser
 sphinx-autodoc-typehints
+sphinx-design
 git+https://github.com/comfort-mode-toolkit/cm-colors.git
 cm-colors
+sphinx-book-theme
