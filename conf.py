@@ -21,22 +21,17 @@ extensions = [
     'sphinx.ext.napoleon', # Recommended if you use Google or NumPy style docstrings
     'sphinx.ext.viewcode',
     'myst_parser',  # For Markdown support
+    'sphinx_design',
 ]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-html_static_path = ['_static']
-html_css_files = [
-    'custom.css',
-]
 
-html_theme = 'alabaster'
-html_theme_options = {
-    'sidebar_bg': '#ECEAF3',
-    'body_text': '#1A1A1A',
-    'sidebar_text': '#1A1A1A',
-    'sidebar_link': '#14407C',
-    'link': '#14407C',
-    'anchor': '#232259',
-    # add other alabaster options as needed
-}
+
+html_static_path = ['_static']
+html_css_files = ['custom.css']
+
+html_theme = 'sphinx_book_theme'
+# html_theme_options = {
+#     # add sphinx-book-theme options as needed
+# }
